@@ -8,10 +8,7 @@ class App extends React.Component {
         super(props);
 
         this.state= { lat: null, errorMessage: '' };
-    }
 
-    //Remember to always render with class based components
-    render() {
         window.navigator.geolocation.getCurrentPosition(
             position => {
                 {/* setting state, then setting the object key's value! */}
@@ -21,13 +18,20 @@ class App extends React.Component {
                 this.setState({ errorMessage: err.message})
             }
         );
-        return (
-        <div>
-            Latitude: {this.state.lat}
-            <br />
-            Error: {this.state.errorMessage}
-        </div>
-        )
+    }
+
+    //Remember to always render with class based components
+    render() {
+        //conditional rendering!
+        if (this.state.errorMessage && !this.state.lat) {
+            return <div>Error: {this.state.errorMessage}</div>
+        }
+
+        if (!this.state.errorMessage && this.state.lat) {
+            return <div>Latitutde: {this.state.lat}</div>
+        }
+
+        return <div>Loading!</div>;
     }
 };
 
