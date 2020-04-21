@@ -7,7 +7,7 @@ class App extends React.Component {
     constructor(props){
         super(props);
 
-        this.state= { lat: null };
+        this.state= { lat: null, errorMessage: '' };
     }
 
     //Remember to always render with class based components
@@ -17,10 +17,16 @@ class App extends React.Component {
                 {/* setting state, then setting the object key's value! */}
                 this.setState({ lat: position.coords.latitude })
             },
-            (err) => console.log(err)
+            err => {
+                this.setState({ errorMessage: err.message})
+            }
         );
         return (
-        <div>Latitude: {this.state.lat}</div>
+        <div>
+            Latitude: {this.state.lat}
+            <br />
+            Error: {this.state.errorMessage}
+        </div>
         )
     }
 };
